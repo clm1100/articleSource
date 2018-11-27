@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="btn"  type="text" >
+<button onclick="test()">添加</button>
+</body>
+<script>
+    const queuedObservers = new Set();
+    const observe = fn => queuedObservers.add(fn);
+    function set(target, key, value, receiver) {
+        const result = Reflect.set(target, key, value, receiver);
+        queuedObservers.forEach(observer => observer());
+        return result;
+    }
+    const observable = obj => new Proxy(obj, {set});
+    const person = observable({
+        name: '张三',
+        age: 20
+    });
+
+    
+    function print() {
+        document.querySelector("input").value = person.name;
+        console.log(`${person.name}, ${person.age}`)
+    }
+    print();
+    observe(print);
+    function test(){
+        person.name = '李四';
+
+    }
+    document.querySelector('#btn').oninput=function(e){
+        person.name = e.target.value;
+    }
+</script>
+</html>
