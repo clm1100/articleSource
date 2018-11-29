@@ -2,6 +2,8 @@
   "name": "",
   "version": "",
   "dependencies": {
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
     "pify": "^4.0.1"
   }
 }

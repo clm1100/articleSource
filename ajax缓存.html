@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script>
+$(function(){
+    $.ajax({
+        url:"/tt",
+        beforeSend:(xhr)=>{
+            console.log(xhr);
+            xhr.setRequestHeader("clm", "111");
+            xhr.setRequestHeader("Cache-Control", "no-cache");
+        },
+        success:(data,xhr,tt)=>{
+            console.log(tt.getAllResponseHeaders())
+            console.log(xhr);
+        }
+    })
+})
+</script>
+</body>
+</html>
