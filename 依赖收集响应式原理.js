@@ -12,6 +12,16 @@ const Dep = {
  * @param { Any } val 对象的某个key的值
  */
 function defineReactive (obj, key, val) {
+	// 每一个属性都有一个依赖列表或者叫依赖集合
+	// 在get里面进行收集,收集的时候需要注意几个问题
+	// 1、收集的是什么
+	// 2、通过什么方式进行收集
+	// 依次解答，收集的是watch函数的回调 那watch的又是什么呢？后面再说;
+	// 通过全局变量共享的方式进行收集,当运行watch时,将watch的回调
+	// 赋值给全局变量Dep.target
+	// 然后调用对象属性的get方法,此时get方法内部会判断Dep.target上有没有
+	// 函数,有的话将其填充到本属性内部的deps中,
+	// 然后watch内部将Dep.target置空,Dep.target相当于一个中间运送变量;
   const deps = []
   Object.defineProperty(obj, key, {
     get () {
